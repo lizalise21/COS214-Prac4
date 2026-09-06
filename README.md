@@ -1,7 +1,7 @@
-# TaskForge: Hierarchical Work Processing System (COS 214 Practical 4)
+# TaskForge: Logistics Work Processing System (COS 214 Practical 4)
 
 ## Overview
-TaskForge is an application for logistics and shipment management. The project demonstrates the the use of four design patterns: **Composite**, **Iterator**, **State**, and **Decorator**.
+TaskForge is an application for logistics and shipment management. The project make use of four design patterns: **Composite**, **Iterator**, **State**, and **Decorator**.
 
 ## Project Repository Structure
 ```text
