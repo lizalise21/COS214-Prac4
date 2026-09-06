@@ -11,6 +11,7 @@
 #include "ConcreteIterators.h"
 #include "Delivery.h"
 #include "ConcreteStates.h"
+#include "LogisticsControlCenter.h"
 
 int main() {
     std::cout << "========================================================\n";
@@ -78,9 +79,6 @@ int main() {
     std::cout << "\nScenario 1 Completed Successfully.\n\n";
 
 
-    // =========================================================================
-    // SCENARIO 2: Traversal When Changes Are Made (Snapshot Validation)
-    // =========================================================================
     std::cout << "--------------------------------------------------------\n";
     std::cout << "SCENARIO 2: Traversal Under Live Mutation (Snapshot Policy)\n";
     std::cout << "--------------------------------------------------------\n";
@@ -133,9 +131,42 @@ int main() {
     std::cout << "Total items processed by snapshot: " << visitedCount << "\n";
     std::cout << "Result: Traversal executed cleanly over isolated snapshot without memory corruption.\n";
 
-    // =========================================================================
-    // MEMORY CLEANUP
-    // =========================================================================
+    std::cout << "--------------------------------------------------------\n";
+    std::cout << "SCENARIO 3: Control Center Manifests & Shipment Relocation\n";
+    std::cout << "--------------------------------------------------------\n";
+
+    // Step 1: Create groups and items for control center management
+    std::cout << "\n[Step 1] Constructing Control Center Hierarchy...\n";
+    ShipmentGroup* hubRoot = new ShipmentGroup("HUB-01", "Gauteng Distribution Hub", "Midrand");
+    ShipmentGroup* depotA = new ShipmentGroup("DEP-A", "Pretoria Local Depot", "Pretoria");
+    ShipmentGroup* depotB = new ShipmentGroup("DEP-B", "Johannesburg Express Hub", "Johannesburg");
+
+    ShipmentItem* pkg1 = new ShipmentItem("PKG-101", 5.0, "Pretoria", 200.0, true);  // Urgent
+    ShipmentItem* pkg2 = new ShipmentItem("PKG-102", 12.0, "Johannesburg", 150.0, false); // Non-urgent
+
+    depotA->add(pkg1);
+    depotA->add(pkg2);
+    hubRoot->add(depotA);
+    hubRoot->add(depotB);
+
+    // Step 2: Instantiate LogisticsControlCenter with root group
+    std::cout << "\n[Step 2] Initializing Logistics Control Center...\n";
+    LogisticsControlCenter controlCenter(hubRoot);
+
+    // Step 3: Print Full and Urgent Manifests
+    std::cout << "\n[Step 3] Printing Manifests via Control Center...\n";
+    controlCenter.printFullManifest();
+    controlCenter.printUrgentManifest();
+
+    // Step 4: Relocate shipment from Depot A to Depot B
+    std::cout << "\n[Step 4] Relocating PKG-102 from Depot A to Depot B...\n";
+    controlCenter.relocateShipment(pkg2, depotA, depotB);
+
+    std::cout << "\n--- Updated Full Manifest After Relocation ---";
+    controlCenter.printFullManifest();
+
+    std::cout << "\nScenario 3 Completed Successfully.\n\n";
+
     std::cout << "\n--------------------------------------------------------\n";
     std::cout << "CLEANUP: Deallocating Dynamic Memory...\n";
     std::cout << "--------------------------------------------------------\n";
