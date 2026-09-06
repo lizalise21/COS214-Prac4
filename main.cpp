@@ -174,6 +174,7 @@ int main() {
     // Deleting root groups cascades down and deletes child components/decorators
     delete mainContainer; 
     delete mutationGroup;
+    delete hubRoot;
 
     std::cout << "All memory successfully freed. Program exiting cleanly.\n";
     std::cout << "========================================================\n";
