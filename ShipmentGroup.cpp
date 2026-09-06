@@ -59,4 +59,13 @@ bool ShipmentGroup::isUrgent() const {
 }
 
 ShipmentIterator* ShipmentGroup::createFullIterator() {
-    return new
+    return new DeliveryIterator(this);
+}
+
+ShipmentIterator* ShipmentGroup::createPriorityIterator() {
+    return new PriorityIterator(this);
+}
+
+const std::vector<ShipmentComponent*>& ShipmentGroup::getChildrenInternal() const {
+    return children;
+}
