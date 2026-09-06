@@ -41,7 +41,7 @@ void PriorityIterator::advanceToNextUrgent() {
     nextUrgent = nullptr;
     while (internalIterator->hasNext()) {
         ShipmentComponent* candidate = internalIterator->next();
-        if (candidate->isUrgent()) {
+        if (dynamic_cast<ShipmentGroup*>(candidate) == nullptr && candidate->isUrgent()) {
             nextUrgent = candidate;
             break;
         }
