@@ -11,7 +11,6 @@ OBJ_DIR = obj
 
 # Source and Object Files
 SRCS = $(wildcard $(SRC_DIR)/*.cpp)
-OBJS = $(patsub Dust/$(SRCS:.cpp=.o), $(OBJ_DIR)/%)
 OBJS = $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(notdir $(SRCS)))
 
 # Default Rule
